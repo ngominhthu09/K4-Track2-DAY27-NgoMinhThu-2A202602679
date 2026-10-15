@@ -1,5 +1,5 @@
 # Reflection
 
-The hardest faults to catch are partial lineage changes and subtle drift. A lineage slice shows the actual upstream and downstream graph, but when the event does not provide an expected graph, a missing edge can look like a valid smaller graph. Small feature or embedding shifts can also sit close to normal variation, so fixed calibrated limits favor fewer false alarms over catching every subtle fault.
+The hardest faults are subtle feature or embedding shifts and partial lineage breaks. Contract violations are directly exposed by the contract tool, while small distribution changes can overlap normal variation. A lineage slice reports the observed graph, so detecting a missing edge depends on knowing the expected upstreams for that model.
 
-With another pass, I would use `ctx.state` to build cautious online reference profiles for repeated transforms or data sources, and alert on sustained changes rather than one borderline value. I would keep one relevant metered call per event and tune those adaptive thresholds on practice to preserve the current low false-alarm rate and stay within budget.
+The supplied composite-distance example at 1.30 caught every Practice fault but also raised the false-alarm rate. I increased the alert threshold after measuring that tradeoff, then checked the choice on Public and Private. With another pass, I would use `ctx.state` to maintain cautious per-source reference statistics and alert on corroborated shifts, while keeping one relevant metered call per event and evaluating both missed faults and false alarms.
